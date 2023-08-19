@@ -1175,7 +1175,7 @@ case $choice in
       clear
       # 可道云桌面
       read -p "请输入你解析的域名：" yuming
-      read -p "设置新数据库名称：" dbname
+#      read -p "设置新数据库名称：" dbname
 
       docker stop nginx
 
@@ -1191,16 +1191,19 @@ case $choice in
       cd /home/web/html
       mkdir $yuming
       cd $yuming
-      wget https://github.com/kalcaddle/kodbox/archive/refs/tags/1.42.04.zip
-      unzip -o 1.42.04.zip
-      rm 1.42.04.zip
+#      wget https://github.com/kalcaddle/kodbox/archive/refs/tags/1.42.04.zip
+#      unzip -o 1.42.04.zip
+#      rm 1.42.04.zip
+      wget https://github.com/kalcaddle/KodExplorer/archive/refs/tags/4.51.03.zip
+            unzip -o 4.51.03.zip
+            rm 4.51.03.zip
 
       docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
-      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
+#      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
       docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
@@ -1208,12 +1211,12 @@ case $choice in
       clear
       echo "您的可道云桌面搭建好了！"
       echo "https://$yuming"
-      echo ""
-      echo "安装信息如下："
-      echo "数据库主机：mysql"
-      echo "用户名：$dbuse"
-      echo "密码：$dbusepasswd"
-      echo "数据库名：$dbname"
+#      echo ""
+#      echo "安装信息如下："
+#      echo "数据库主机：mysql"
+#      echo "用户名：$dbuse"
+#      echo "密码：$dbusepasswd"
+#      echo "数据库名：$dbname"
 
         ;;
       5)
