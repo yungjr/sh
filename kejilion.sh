@@ -1013,7 +1013,7 @@ case $choice in
       cd /home && mkdir -p web/html web/mysql web/certs web/conf.d web/redis && touch web/docker-compose.yml
 
       # 下载 docker-compose.yml 文件并进行替换 修改為自己的分支代碼
-      wget -O /home/web/docker-compose.yml https://github.com/yungjr/docker/raw/dev/LNMP-docker-compose-4.yml
+      wget -O /home/web/docker-compose.yml https://raw.githubusercontent.com/yungjr/docker/dev/LNMP-docker-compose-4.yml
 
       # 在 docker-compose.yml 文件中进行替换
       sed -i "s/webroot/$dbrootpasswd/g" /home/web/docker-compose.yml
@@ -1091,7 +1091,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/wordpress.com.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/wordpress.com.conf
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
 
       cd /home/web/html
@@ -1137,7 +1137,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/discuz.com.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/discuz.com.conf
 
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
 
@@ -1184,7 +1184,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/kdy.com.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/kdy.com.conf
 
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
 
@@ -1229,7 +1229,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/maccms.com.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/maccms.com.conf
 
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
 
@@ -1240,7 +1240,7 @@ case $choice in
       cd /home/web/html/$yuming/maccms10-master/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/$yuming/maccms10-master/template/DYXS2.zip
       cp /home/web/html/$yuming/maccms10-master/template/DYXS2/asset/admin/Dyxs2.php /home/web/html/$yuming/maccms10-master/application/admin/controller
       cp /home/web/html/$yuming/maccms10-master/template/DYXS2/asset/admin/dycms.html /home/web/html/$yuming/maccms10-master/application/admin/view/system
-      mv /home/web/html/$yuming/maccms10-master/admin.php /home/web/html/$yuming/maccms10-master/vip.php && wget -O /home/web/html/$yuming/maccms10-master/application/extra/maccms.php https://raw.githubusercontent.com/kejilion/Website_source_code/main/maccms.php
+      mv /home/web/html/$yuming/maccms10-master/admin.php /home/web/html/$yuming/maccms10-master/vip.php && wget -O /home/web/html/$yuming/maccms10-master/application/extra/maccms.php https://raw.githubusercontent.com/yungjr/Website_source_code/main/maccms.php
 
       docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
 
@@ -1282,7 +1282,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/dujiaoka.com.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/dujiaoka.com.conf
 
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
 
@@ -1341,7 +1341,7 @@ case $choice in
       # Get external IP address
       external_ip=$(curl -s ipv4.ip.sb)
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/reverse-proxy.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/reverse-proxy.conf
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
       sed -i "s/0.0.0.0/$external_ip/g" /home/web/conf.d/$yuming.conf
       sed -i "s/0000/3099/g" /home/web/conf.d/$yuming.conf
@@ -1367,7 +1367,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/rewrite.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/rewrite.conf
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
       sed -i "s/baidu.com/$reverseproxy/g" /home/web/conf.d/$yuming.conf
 
@@ -1392,7 +1392,7 @@ case $choice in
 
       docker start nginx
 
-      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/kejilion/nginx/main/reverse-proxy.conf
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/reverse-proxy.conf
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
       sed -i "s/0.0.0.0/$reverseproxy/g" /home/web/conf.d/$yuming.conf
       sed -i "s/0000/$port/g" /home/web/conf.d/$yuming.conf
@@ -2382,7 +2382,7 @@ case $choice in
           1)
               clear
               read -p "请输入你的快捷按键: " kuaijiejian
-              echo "alias $kuaijiejian='curl -sS -O https://raw.githubusercontent.com/kejilion/sh/main/kejilion.sh && chmod +x kejilion.sh && ./kejilion.sh'" >> ~/.bashrc
+              echo "alias $kuaijiejian='curl -sS -O https://raw.githubusercontent.com/yungjr/sh/main/kejilion.sh && chmod +x kejilion.sh && ./kejilion.sh'" >> ~/.bashrc
               echo "快捷键已添加。请重新启动终端，或运行 'source ~/.bashrc' 以使修改生效。"
               ;;
 
