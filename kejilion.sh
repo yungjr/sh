@@ -1110,7 +1110,7 @@ case $choice in
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
       clear
       echo "您的WordPress搭建好了！"
@@ -1155,7 +1155,7 @@ case $choice in
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
       clear
@@ -1202,7 +1202,7 @@ case $choice in
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
       clear
@@ -1218,7 +1218,7 @@ case $choice in
         ;;
       5)
       clear
-      # 可道云桌面
+      # 苹果CMS网站
       read -p "请输入你解析的域名：" yuming
       read -p "设置新数据库名称：" dbname
 
@@ -1249,7 +1249,7 @@ case $choice in
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
       clear
@@ -1271,7 +1271,7 @@ case $choice in
 
       6)
       clear
-      # 独脚数卡
+      # 独角数卡
       read -p "请输入你解析的域名：" yuming
       read -p "设置新数据库名称：" dbname
 
@@ -1298,7 +1298,7 @@ case $choice in
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
       clear
@@ -1371,7 +1371,7 @@ case $choice in
       sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
       sed -i "s/baidu.com/$reverseproxy/g" /home/web/conf.d/$yuming.conf
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
       clear
       echo "您的重定向网站做好了！"
@@ -1397,7 +1397,7 @@ case $choice in
       sed -i "s/0.0.0.0/$reverseproxy/g" /home/web/conf.d/$yuming.conf
       sed -i "s/0000/$port/g" /home/web/conf.d/$yuming.conf
 
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
       clear
       echo "您的反向代理网站做好了！"
@@ -1546,7 +1546,7 @@ case $choice in
       docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
 
       docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
       clear
@@ -1691,7 +1691,7 @@ case $choice in
       docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
 
       docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
-      docker restart php && docker restart php74 && docker restart nginx
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
       clear
       clear
