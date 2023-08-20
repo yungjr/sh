@@ -1016,7 +1016,7 @@ case $choice in
       cd /home && mkdir -p web/html web/mysql web/certs web/conf.d web/redis && touch web/docker-compose.yml
 
       # 下载 docker-compose.yml 文件并进行替换 修改為自己的分支代碼
-      wget -O /home/web/docker-compose.yml https://raw.githubusercontent.com/yungjr/docker/dev/LNMP-docker-compose-4.yml
+      wget -O /home/web/docker-compose.yml https://raw.githubusercontent.com/yungjr/docker/dev/P70-M56-docker-compose.yml
 
       # 在 docker-compose.yml 文件中进行替换
       sed -i "s/webroot/$dbrootpasswd/g" /home/web/docker-compose.yml
