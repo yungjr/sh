@@ -960,11 +960,11 @@ case $choice in
     echo  "------------------------"
     echo  "2. 安装WordPress"
     echo  "3. 安装Discuz论坛"
-#    echo  "4. 安装可道云桌面"
-    echo  "4. 安装可道云KOD"
+    echo  "4. 安装可道云桌面kodbox"
     echo  "5. 安装苹果CMS网站"
     echo  "6. 安装独角数发卡网"
     echo  "7. 安装BingChatAI聊天网站"
+    echo  "8. 安装可道云KodExplorer"
     echo  "------------------------"
     echo  "21. 站点重定向"
     echo  "22. 站点反向代理"
@@ -1053,6 +1053,30 @@ case $choice in
       docker exec php74 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
       docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
 
+      docker exec php70 apt update &&
+      docker exec php70 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php70 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php70 pecl install imagick &&
+      docker exec php70 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php70 pecl install redis &&
+      docker exec php70 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php70 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php70 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php70 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php70 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
+      docker exec php54 apt update &&
+      docker exec php54 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php54 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php54 pecl install imagick &&
+      docker exec php54 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php54 pecl install redis &&
+      docker exec php54 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php54 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php54 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php54 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
       clear
       echo "LDNMP环境安装完毕"
       echo "------------------------"
@@ -1104,7 +1128,7 @@ case $choice in
 
       echo "define('FS_METHOD', 'direct'); define('WP_REDIS_HOST', 'redis'); define('WP_REDIS_PORT', '6379');" >> /home/web/html/$yuming/wordpress/wp-config-sample.php
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
@@ -1149,7 +1173,7 @@ case $choice in
       unzip -o Discuz_X3.5_SC_UTF8_20230520.zip
       rm Discuz_X3.5_SC_UTF8_20230520.zip
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
@@ -1172,11 +1196,11 @@ case $choice in
 
         ;;
 
-      4)
+4)
       clear
-      # 可道云桌面
+      # 可道云桌面kodbox
       read -p "请输入你解析的域名：" yuming
-#      read -p "设置新数据库名称：" dbname
+      read -p "设置新数据库名称：" dbname
 
       docker stop nginx
 
@@ -1192,19 +1216,16 @@ case $choice in
       cd /home/web/html
       mkdir $yuming
       cd $yuming
-#      wget https://github.com/kalcaddle/kodbox/archive/refs/tags/1.42.04.zip
-#      unzip -o 1.42.04.zip
-#      rm 1.42.04.zip
-      wget https://github.com/kalcaddle/KodExplorer/archive/refs/tags/4.51.03.zip
-            unzip -o 4.51.03.zip
-            rm 4.51.03.zip
+      wget https://github.com/kalcaddle/kodbox/archive/refs/tags/1.43.01.1.zip
+      unzip -o 1.43.01.1.zip
+      rm 1.43.01.1.zip
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
-#      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
+      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
 
       docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
@@ -1212,12 +1233,12 @@ case $choice in
       clear
       echo "您的可道云桌面搭建好了！"
       echo "https://$yuming"
-#      echo ""
-#      echo "安装信息如下："
-#      echo "数据库主机：mysql"
-#      echo "用户名：$dbuse"
-#      echo "密码：$dbusepasswd"
-#      echo "数据库名：$dbname"
+      echo ""
+      echo "安装信息如下："
+      echo "数据库主机：mysql"
+      echo "用户名：$dbuse"
+      echo "密码：$dbusepasswd"
+      echo "数据库名：$dbname"
 
         ;;
       5)
@@ -1246,7 +1267,7 @@ case $choice in
       cp /home/web/html/$yuming/maccms10-master/template/DYXS2/asset/admin/dycms.html /home/web/html/$yuming/maccms10-master/application/admin/view/system
       mv /home/web/html/$yuming/maccms10-master/admin.php /home/web/html/$yuming/maccms10-master/vip.php && wget -O /home/web/html/$yuming/maccms10-master/application/extra/maccms.php https://raw.githubusercontent.com/yungjr/Website_source_code/main/maccms.php
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
@@ -1295,7 +1316,7 @@ case $choice in
       cd $yuming
       wget https://github.com/assimon/dujiaoka/releases/download/2.0.6/2.0.6-antibody.tar.gz && tar -zxvf 2.0.6-antibody.tar.gz && rm 2.0.6-antibody.tar.gz
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
 
       dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
       dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
@@ -1356,6 +1377,51 @@ case $choice in
       echo "您的BingChat网站搭建好了！"
       echo "https://$yuming"
       echo ""
+        ;;
+      8)
+      clear
+      # 可道云KodExplorer
+      read -p "请输入你解析的域名：" yuming
+#      read -p "设置新数据库名称：" dbname
+
+      docker stop nginx
+
+      curl https://get.acme.sh | sh
+      ~/.acme.sh/acme.sh --register-account -m xxxx@gmail.com --issue -d $yuming --standalone --key-file /home/web/certs/${yuming}_key.pem --cert-file /home/web/certs/${yuming}_cert.pem --force
+
+      docker start nginx
+
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/KodExplorer.com.conf
+
+      sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
+
+      cd /home/web/html
+      mkdir $yuming
+      cd $yuming
+      wget https://github.com/kalcaddle/KodExplorer/archive/refs/tags/4.51.03.zip
+            unzip -o 4.51.03.zip
+            rm 4.51.03.zip
+
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
+
+      dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+      dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+      dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+#      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
+
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
+
+
+      clear
+      echo "您的可道云桌面搭建好了！"
+      echo "https://$yuming"
+#      echo ""
+#      echo "安装信息如下："
+#      echo "数据库主机：mysql"
+#      echo "用户名：$dbuse"
+#      echo "密码：$dbusepasswd"
+#      echo "数据库名：$dbname"
+
         ;;
 
 
@@ -1549,7 +1615,31 @@ case $choice in
       docker exec php74 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
       docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec php70 apt update &&
+      docker exec php70 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php70 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php70 pecl install imagick &&
+      docker exec php70 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php70 pecl install redis &&
+      docker exec php70 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php70 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php70 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php70 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php70 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
+      docker exec php54 apt update &&
+      docker exec php54 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php54 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php54 pecl install imagick &&
+      docker exec php54 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php54 pecl install redis &&
+      docker exec php54 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php54 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php54 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php54 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
       docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
 
@@ -1694,7 +1784,31 @@ case $choice in
       docker exec php74 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
       docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
 
-      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html
+      docker exec php70 apt update &&
+      docker exec php70 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php70 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php70 pecl install imagick &&
+      docker exec php70 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php70 pecl install redis &&
+      docker exec php70 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php70 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php70 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php70 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php70 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
+      docker exec php54 apt update &&
+      docker exec php54 apt install -y libmariadb-dev-compat libmariadb-dev libzip-dev libmagickwand-dev imagemagick &&
+      docker exec php54 docker-php-ext-install mysqli pdo_mysql zip gd intl bcmath opcache &&
+      docker exec php54 pecl install imagick &&
+      docker exec php54 sh -c 'echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini' &&
+      docker exec php54 pecl install redis &&
+      docker exec php54 sh -c 'echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini' &&
+      docker exec php54 sh -c 'echo "upload_max_filesize=50M \n post_max_size=50M" > /usr/local/etc/php/conf.d/uploads.ini' &&
+      docker exec php54 sh -c 'echo "memory_limit=256M" > /usr/local/etc/php/conf.d/memory.ini'
+      docker exec php54 sh -c 'echo "max_execution_time=120" > /usr/local/etc/php/conf.d/max_execution_time.ini'
+      docker exec php74 sh -c 'echo "max_input_time=70" > /usr/local/etc/php/conf.d/max_input_time.ini'
+
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
       docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
 
       clear
@@ -2731,6 +2845,7 @@ case $choice in
     echo "脚本更新日志"
     echo  "------------------------"
     echo "2023-8-19   v1.5.3"
+    echo "LDNMP建站添加可道雲KodExplorer可管理站點文件版"
     echo "面板工具添加安装QB离线BT磁力下载面板"
     echo "优化IP获取源"    
     echo  "------------------------"
