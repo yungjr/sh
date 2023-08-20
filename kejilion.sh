@@ -966,6 +966,8 @@ case $choice in
     echo  "7. 安装BingChatAI聊天网站"
     echo  "8. 安装可道云KodExplorer"
     echo  "------------------------"
+    echo  "10. 安裝易如意"
+    echo  "------------------------"
     echo  "21. 站点重定向"
     echo  "22. 站点反向代理"
     echo  "------------------------"
@@ -1195,8 +1197,7 @@ case $choice in
       echo "表前缀：$dbname"
 
         ;;
-
-4)
+      4)
       clear
       # 可道云桌面kodbox
       read -p "请输入你解析的域名：" yuming
@@ -1241,6 +1242,7 @@ case $choice in
       echo "数据库名：$dbname"
 
         ;;
+
       5)
       clear
       # 苹果CMS网站
@@ -1378,6 +1380,7 @@ case $choice in
       echo "https://$yuming"
       echo ""
         ;;
+
       8)
       clear
       # 可道云KodExplorer
@@ -1413,7 +1416,7 @@ case $choice in
 
 
       clear
-      echo "您的可道云桌面搭建好了！"
+      echo "您的可道云KodExplorer搭建好了！"
       echo "https://$yuming"
 #      echo ""
 #      echo "安装信息如下："
@@ -1424,6 +1427,58 @@ case $choice in
 
         ;;
 
+      10)
+      clear
+      #易如意
+      read -p "请输入你解析的域名：" yuming
+      read -p "设置新数据库名称：" dbname
+
+      docker stop nginx
+
+      curl https://get.acme.sh | sh
+      ~/.acme.sh/acme.sh --register-account -m xxxx@gmail.com --issue -d $yuming --standalone --key-file /home/web/certs/${yuming}_key.pem --cert-file /home/web/certs/${yuming}_cert.pem --force
+
+      docker start nginx
+
+      wget -O /home/web/conf.d/$yuming.conf https://raw.githubusercontent.com/yungjr/nginx/dev/eruyi.com.conf
+
+      sed -i "s/yuming.com/$yuming/g" /home/web/conf.d/$yuming.conf
+
+      cd /home/web/html
+      mkdir $yuming
+#      cd $yuming
+#      wget https://github.com/magicblack/maccms_down/raw/master/maccms10.zip && unzip maccms10.zip && rm maccms10.zip
+#      cd /home/web/html/$yuming/maccms10-master/template/ && wget https://github.com/kejilion/Website_source_code/raw/main/DYXS2.zip && unzip DYXS2.zip && rm /home/web/html/$yuming/maccms10-master/template/DYXS2.zip
+#      cp /home/web/html/$yuming/maccms10-master/template/DYXS2/asset/admin/Dyxs2.php /home/web/html/$yuming/maccms10-master/application/admin/controller
+#      cp /home/web/html/$yuming/maccms10-master/template/DYXS2/asset/admin/dycms.html /home/web/html/$yuming/maccms10-master/application/admin/view/system
+#      mv /home/web/html/$yuming/maccms10-master/admin.php /home/web/html/$yuming/maccms10-master/vip.php && wget -O /home/web/html/$yuming/maccms10-master/application/extra/maccms.php https://raw.githubusercontent.com/yungjr/Website_source_code/main/maccms.php
+
+      docker exec nginx chmod -R 777 /var/www/html && docker exec php chmod -R 777 /var/www/html && docker exec php74 chmod -R 777 /var/www/html /var/www/html && docker exec php70 chmod -R 777 /var/www/html && docker exec php54 chmod -R 777 /var/www/html
+
+      dbrootpasswd=$(grep -oP 'MYSQL_ROOT_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+      dbuse=$(grep -oP 'MYSQL_USER:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+      dbusepasswd=$(grep -oP 'MYSQL_PASSWORD:\s*\K.*' /home/web/docker-compose.yml | tr -d '[:space:]')
+      docker exec mysql mysql -u root -p"$dbrootpasswd" -e "CREATE DATABASE $dbname; GRANT ALL PRIVILEGES ON $dbname.* TO \"$dbuse\"@\"%\";"
+
+      docker restart php && docker restart php74 && docker restart php70 && docker restart php54 && docker restart nginx
+
+
+      clear
+      echo "您的易如意搭建好了！"
+      echo "https://$yuming"
+      echo ""
+      echo "安装信息如下："
+      echo "数据库主机：mysql"
+      echo "数据库端口：3306"
+      echo "数据库名：$dbname"
+      echo "用户名：$dbuse"
+      echo "密码：$dbusepasswd"
+      echo "数据库前缀：eruyi_"
+      echo ""
+      echo "安装成功后登录后台地址"
+      echo "https://$yuming/admin"
+      echo ""
+        ;;
 
       21)
       clear
