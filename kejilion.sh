@@ -1972,7 +1972,7 @@ while true; do
             elif [ "$system_type" == "ubuntu" ]; then
               wget -O install.sh https://download.bt.cn/install/install-ubuntu_6.0.sh && sudo bash install.sh ed8484bec
             elif [ "$system_type" == "debian" ]; then
-              wget -O install.sh https://download.bt.cn/install/install-ubuntu_6.0.sh && bash install.sh ed8484bec
+              wget -O install_panel.sh https://raw.githubusercontent.com/8838/btpanel-v7.7.0/main/install/install_panel.sh && bash install_panel.sh ed8484bec
             fi
             ;;
           [Nn]) ;;
