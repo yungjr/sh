@@ -7,7 +7,7 @@ while true; do
   ───░█ ░█▀▀█
   ─▄─░█ ░█▄▄▀
   ░█▄▄█ ░█─░█ "
-  echo -e "\033[96m科技lion一键脚本工具(小至) v1.5.3 （支持Ubuntu，Debian，Centos系统）\033[0m"
+  echo -e "\033[96m科技lion一键脚本工具(小至) v1.5.4 （支持Ubuntu，Debian，Centos系统）\033[0m"
   echo "------------------------"
   echo "1. 系统信息查询"
   echo "2. 系统更新"
